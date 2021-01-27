@@ -39,6 +39,21 @@ bot.on('message', msg => {
       })
   } else if (msg.content.startsWith('!test')) {
     msg.channel.send(process.env.USERNAME)
+  } else if (msg.content.startsWith('!ste')) {
+    mymsg=msg.content.substring(5);
+    msg.channel.send(mymsg);
+    command = 'cd&&sh screenscript.sh /"'+mymsg+'^M/"';
+    ssh.connect({
+        host: process.env.HOST,
+        username: process.env.USERNAME,
+        privateKey: process.env.KEY
+      }).then(function() {
+        ssh.execCommand(command, {}).then(function(result) {
+            console.log('STDOUT: ' + result.stdout)
+            console.log('STDERR: ' + result.stderr)
+            msg.channel.send('STDOUT: ' + result.stdout)
+          })
+      })
   }
 
 });
