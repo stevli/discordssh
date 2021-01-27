@@ -1,7 +1,11 @@
 require('dotenv').config();
 const Discord = require('discord.js');
+const fs = require('fs')
+const path = require('path')
+const {NodeSSH} = require('node-ssh')
 const bot = new Discord.Client();
 const TOKEN = process.env.TOKEN;
+const ssh = new NodeSSH();
 
 bot.login(TOKEN);
 
@@ -21,5 +25,20 @@ bot.on('message', msg => {
     } else {
       msg.reply('Please tag a valid user!');
     }
+  } else if (msg.content.startsWith('!ssh')) {
+    ssh.connect({
+        host: process.env.HOST,
+        username: process.env.USERNAME,
+        privateKey: process.env.KEY
+      }).then(function() {
+        ssh.execCommand('screen -list', {}).then(function(result) {
+            console.log('STDOUT: ' + result.stdout)
+            console.log('STDERR: ' + result.stderr)
+            msg.channel.send('STDOUT: ' + result.stdout)
+          })
+      })
+  } else if (msg.content.startsWith('!test')) {
+    msg.channel.send(process.env.USERNAME)
   }
+
 });
