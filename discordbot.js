@@ -93,7 +93,9 @@ bot.on('message', msg => {
       if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
         const index = listofadmins.indexOf(taggedUser.id);
-        msg.channel.send(index);
+        //msg.channel.send(index);
+        //msg.channel.send(listofadmins[1]);
+        //msg.channel.send(taggedUser.id);
         if (index > -1) {
           listofadmins.splice(index, 1);
         }
