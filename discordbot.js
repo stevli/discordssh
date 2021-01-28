@@ -8,10 +8,12 @@ const TOKEN = process.env.TOKEN;
 const ssh = new NodeSSH();
 
 bot.login(TOKEN);
-//hiaaA
+
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
+
+var listofadmins = [];
 
 bot.on('message', msg => {
   if (msg.content === 'ping') {
@@ -38,7 +40,7 @@ bot.on('message', msg => {
           })
       })
   } else if (msg.content.startsWith('!test')) {
-    msg.channel.send(process.env.USERNAME)
+    msg.channel.send(msg.client+"aaa")
   } else if (msg.content.startsWith('!ste')) {
     mymsg=msg.content.substring(5);
     //msg.channel.send(mymsg);
