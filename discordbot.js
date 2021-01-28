@@ -51,7 +51,12 @@ bot.on('message', msg => {
         ssh.execCommand(command, {}).then(function(result) {
             console.log('STDOUT: ' + result.stdout)
             console.log('STDERR: ' + result.stderr)
-            msg.channel.send('Server: ' + result.stdout)
+            //msg.channel.send('Server: ' + result.stdout)
+            ssh.execCommand('echo "$(tail /home/slicloud/mcmodded/fabric/logs/latest.log -n 1)"', {}).then(function(result) {
+              console.log('STDOUT: ' + result.stdout)
+              console.log('STDERR: ' + result.stderr)
+              msg.channel.send('Server: ' + result.stdout)
+            })
           })
       })
   }
