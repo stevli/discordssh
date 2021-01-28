@@ -92,7 +92,8 @@ bot.on('message', msg => {
     }else if (msg.content.startsWith('!removeadmin')){
       if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
-        const index = array.indexOf(taggedUser.id);
+        const index = listofadmins.indexOf(taggedUser.id);
+        msg.channel.send(index);
         if (index > -1) {
           listofadmins.splice(index, 1);
         }
