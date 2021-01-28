@@ -51,13 +51,7 @@ bot.on('message', msg => {
         ssh.execCommand(command, {}).then(function(result) {
             console.log('STDOUT: ' + result.stdout)
             console.log('STDERR: ' + result.stderr)
-            //msg.channel.send('Server: ' + result.stdout)
-            ssh.execCommand(command, {}).then(function(result) {
-                console.log('STDOUT: ' + result.stdout)
-                console.log('STDERR: ' + result.stderr)
-                //msg.channel.send('Server: ' + result.stdout)
-                
-              })
+            msg.channel.send('Server: ' + result.stdout)
           })
       })
   }
