@@ -13,7 +13,7 @@ bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
 
-listofadmins = [185494526411014144];
+listofadmins = [185494526411014144,102264443445989376];
 
 bot.on('message', msg => {
   admin=false;
@@ -85,6 +85,18 @@ bot.on('message', msg => {
         const taggedUser = msg.mentions.users.first();
         msg.channel.send(`You added admin: ${taggedUser.username}`);
         listofadmins.push(taggedUser.id);
+        //msg.channel.send(taggedUser.id);
+      } else {
+        msg.reply('Please tag a valid user!');
+      }
+    }else if (msg.content.startsWith('!removeadmin')){
+      if (msg.mentions.users.size) {
+        const taggedUser = msg.mentions.users.first();
+        const index = array.indexOf(taggedUser.id);
+        if (index > -1) {
+          listofadmins.splice(index, 1);
+        }
+        msg.channel.send(`You removed admin: ${taggedUser.username}`);
         //msg.channel.send(taggedUser.id);
       } else {
         msg.reply('Please tag a valid user!');
