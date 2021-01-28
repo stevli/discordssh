@@ -8,7 +8,7 @@ const TOKEN = process.env.TOKEN;
 const ssh = new NodeSSH();
 
 bot.login(TOKEN);
-
+//hiaaA
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
