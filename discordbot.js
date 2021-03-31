@@ -9,6 +9,10 @@ const ssh = new NodeSSH();
 
 bot.login(TOKEN);
 
+const prefix = "!ste ";
+const mcdirectory = "";
+const mclogs = "";
+
 bot.on('ready', () => {
   console.info(`Logged in as ${bot.user.tag}!`);
 });
@@ -16,7 +20,7 @@ bot.on('ready', () => {
 listofadmins = [185494526411014144,102264443445989376];
 
 bot.on('message', msg => {
-  admin=false;
+  admin=true;
   for(i=0; i<listofadmins.length;i++){
     if(msg.author == listofadmins[i]){
       admin=true;
@@ -27,14 +31,17 @@ bot.on('message', msg => {
       msg.reply('pong');
       //msg.channel.send('pong');
 
-    } else if (msg.content.startsWith('!kick')) {
+    } else if (msg.content.startsWith(prefix + 'bot')) {
       if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
-        msg.channel.send(`You wanted to kick: ${taggedUser.username}`);
+		//const User = client.users.cache.get("814403658107584573");
+		//const dev = await client.fetchUser("814403658107584573");
+        msg.channel.send(`Hi ${taggedUser} Im a bot`) ;
+		
       } else {
         msg.reply('Please tag a valid user!');
       }
-    } else if (msg.content.startsWith('!screenlist')) {
+    } else if (msg.content.startsWith(prefix + 'screenlist')) {
       ssh.connect({
           host: process.env.HOST,
           username: process.env.USERNAME,
@@ -46,12 +53,12 @@ bot.on('message', msg => {
               msg.channel.send('STDOUT: ' + result.stdout)
             })
         })
-    } else if (msg.content.startsWith('!test')) {
+    } else if (msg.content.startsWith(prefix + 'test')) {
       msg.channel.send("aaa")
-    } else if (msg.content.startsWith('!ste')) {
-      mymsg=msg.content.substring(5);
+    } else if (msg.content.startsWith(prefix + 'command')) {
+      mymsg=msg.content.substring(13);
       //msg.channel.send(mymsg);
-      command = `cd&&sh screenscript.sh  "${mymsg} ^M"`;
+      command = `screen -S minecraft -p 0 -X stuff "${mymsg}^M"`;
       ssh.connect({
           host: process.env.HOST,
           username: process.env.USERNAME,
@@ -68,7 +75,7 @@ bot.on('message', msg => {
               })
             })
         })
-    }else if (msg.content.startsWith('!start')){
+    }else if (msg.content.startsWith(prefix + 'start')){
       ssh.connect({
         host: process.env.HOST,
         username: process.env.USERNAME,
@@ -80,7 +87,7 @@ bot.on('message', msg => {
             msg.channel.send('STDOUT: ' + result.stdout)
           })
       })
-    }else if (msg.content.startsWith('!addadmin')){
+    }else if (msg.content.startsWith(prefix + 'addadmin')){
       if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
         msg.channel.send(`You added admin: ${taggedUser.username}`);
@@ -89,7 +96,7 @@ bot.on('message', msg => {
       } else {
         msg.reply('Please tag a valid user!');
       }
-    }else if (msg.content.startsWith('!removeadmin')){
+    }else if (msg.content.startsWith(prefix + 'removeadmin')){
       if (msg.mentions.users.size) {
         const taggedUser = msg.mentions.users.first();
         const index = listofadmins.indexOf(taggedUser.id);
